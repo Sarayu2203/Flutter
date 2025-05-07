@@ -1,0 +1,121 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: [
+            const SizedBox(height: 80),
+            const AppTitle(),         // Stateless title
+            const SizedBox(height: 20),
+            Expanded(child: LoginBox()), // Stateful login box
+          ],
+        ),
+        backgroundColor: Colors.grey[200],
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+// Stateless Widget: App Title
+class AppTitle extends StatelessWidget {
+  const AppTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Welcome to Login App',
+        style: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: Colors.deepPurple,
+        ),
+      ),
+    );
+  }
+}
+
+// Stateful Widget: Login Layout
+class LoginBox extends StatefulWidget {
+  const LoginBox({super.key});
+
+  @override
+  _LoginBoxState createState() => _LoginBoxState();
+}
+
+class _LoginBoxState extends State<LoginBox> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _handleSubmit() {
+    String user = usernameController.text;
+    String pass = passwordController.text;
+    print('Username: $user\nPassword: $pass');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 320,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.deepPurple, width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8,
+              offset: Offset(2, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: usernameController,
+              decoration: InputDecoration(
+                labelText: 'Username',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _handleSubmit,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                child: Text('Submit'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
